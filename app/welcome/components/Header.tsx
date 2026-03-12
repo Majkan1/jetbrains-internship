@@ -1,6 +1,7 @@
 import { lazy, Suspense, useEffect, useState } from "react";
+import type { ComponentType } from "react";
 
-const JetBrainsHeader = lazy(() => 
+const JetBrainsHeader = lazy<ComponentType<any>>(() => 
   import("@jetbrains/kotlin-web-site-ui/out/components/header/index.js").then(mod => {
     import("@jetbrains/kotlin-web-site-ui/out/components/header/index.css");
     
@@ -21,7 +22,7 @@ export default function Header() {
 
   return (
     <Suspense fallback={<div style={{ height: "64px", background: "#19191c" }} />}>
-      <JetBrainsHeader />
+      <JetBrainsHeader searchConfig={{}} />
     </Suspense>
   );
 }

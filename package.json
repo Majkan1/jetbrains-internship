@@ -23,7 +23,7 @@
     "@rescui/tooltip": "^0.10.9",
     "@rescui/typography": "^0.24.3",
     "@rescui/ui-contexts": "^0.6.0",
-    "algoliasearch": "^5.49.2",
+    "algoliasearch": "^4.27.0",
     "body-scroll-lock": "^4.0.0-beta.0",
     "classnames": "^2.5.1",
     "cookie": "^1.1.1",
@@ -52,6 +52,7 @@
     "tailwindcss": "^4.1.13",
     "typescript": "^5.9.2",
     "vite": "^7.1.7",
+    "vite-plugin-commonjs": "^0.10.4",
     "vite-tsconfig-paths": "^5.1.4"
   }
 }
