@@ -8,4 +8,9 @@ export default defineConfig({
   ssr: {
     noExternal: ["@jetbrains/kotlin-web-site-ui", /@rescui\/.+/],
   },
+  optimizeDeps: {
+    include: [
+      "@jetbrains/kotlin-web-site-ui"
+    ]
+  }
 });
