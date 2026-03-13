@@ -187,7 +187,7 @@ export default function Index() {
           </div>
           
           <div className="mt-12">
-             <a href="https://blog.jetbrains.com/kotlin/" className="border border-white/20 hover:bg-white/10 px-6 py-3 rounded-lg font-semibold transition-colors duration-200">
+             <a href="https://blog.jetbrains.com/kotlin/" className="border border-white/20 hover:bg-white/10 px-7 py-4 rounded-lg font-semibold transition-colors duration-200 flex justify-center w-40 rounded-[30px]">
                Kotlin blog
              </a>
           </div>
