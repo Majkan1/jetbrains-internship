@@ -1,5 +1,48 @@
 
+import { useState } from "react";
+
 export default function Index() {
+
+  const [activeWhyTab, setActiveWhyTab] = useState<"Concise" | "Safe" | "Expressive" | "Interoperable" | "Multiplatform">("Concise");
+  const [usageSortMode, setUsageSortMode] = useState<"default" | "az">("default");
+
+  const usageHighlights = [
+    {
+      name: "Gradle",
+      logo: "/assets/gradle.svg",
+      description: "Gradle is introducing Kotlin as a language for writing build scripts",
+    },
+    {
+      name: "Corda",
+      logo: "/assets/corda.svg",
+      description: "Corda is an open-source distributed ledger platform, supported by major banks, and built entirely in Kotlin",
+    },
+    {
+      name: "Evernote",
+      logo: "/assets/Evernote.svg",
+      description: "Evernote recently integrated Kotlin into their Android client",
+    },
+    {
+      name: "Coursera",
+      logo: "/assets/corsera.svg",
+      description: "Coursera Android app is partially written in Kotlin",
+    },
+    {
+      name: "Spring",
+      logo: "/assets/spring boot.svg",
+      description: "Spring makes use of Kotlin's language features to offer more concise APIs",
+    },
+    {
+      name: "Atlassian",
+      logo: "/assets/download.svg",
+      description: "All new code in the Trello Android app is in Kotlin",
+    },
+  ];
+
+  const displayedUsageHighlights =
+    usageSortMode === "az"
+      ? [...usageHighlights].sort((a, b) => a.name.localeCompare(b.name))
+      : usageHighlights;
 
   const firstIcon = (
     <svg xmlns="http://www.w3.org/2000/svg" className="w-full h-full" viewBox="0 0 48 48" fill="none" aria-hidden="true">
@@ -38,6 +81,147 @@ export default function Index() {
       <path d="M31 10L34 5" stroke="#EDEDED" strokeWidth="2" strokeLinecap="round" />
     </svg>
   );
+
+  function renderWhyKotlinCode() {
+    if (activeWhyTab === "Safe") {
+      return (
+        <pre className="text-[14px] leading-[1.6] text-[#252525] font-mono whitespace-pre-wrap">
+{`fun reply(condition: Boolean): String? =          // Nullability is part of Kotlin's type system
+  if (condition) "I'm fine" else null
+
+fun error(): Nothing =                              // Always throw an exception
+  throw IllegalStateException("Shouldn't be here")
+
+fun main() {
+  val condition = true                              // Try replacing \0true\0 with \0false\0 and run the sample!
+
+  val message = reply(condition)                    // The result is nullable
+  // println(message.uppercase())                   // This line doesn't compile
+  println(message?.replace("fine", "okay"))       // Access a nullable value in a safe manner
+  if (message != null) {                            // If you check that the type is right,
+    println(message.uppercase())                    // the compiler will smart-cast it for you
+  }
+
+  val nonNull: String =                             // If the null-case throws an error,
+    reply(condition = true) ?: error()              // Kotlin can infer that the result is non-null
+  println(nonNull)
+}`}
+        </pre>
+      );
+    }
+
+    if (activeWhyTab === "Expressive") {
+      return (
+        <pre className="text-[14px] leading-[1.6] text-[#252525] font-mono whitespace-pre-wrap">
+{`fun main() {
+  val map = mapOf(1 to "one", 2 to "two")
+  for ((k, v) in map) {                  // Traverse a map or a list of pairs
+    println("$k -> $v")
+  }
+
+  fun obtainKnowledge() = Pair("The Answer", 42)  // Single-expression functions
+
+  val (description, answer) = obtainKnowledge()    // Destructure into a pair of two variables
+  println("$description: $answer")
+
+  getText()?.let {                                 // Apply an action to a nullable expression
+    sendEmailTo("alice@example.com", it)          // if it's not null
+  }
+
+  createEmptyWindow()
+    .apply {
+      width = 300                                  // Configure properties of an object
+      height = 200
+      isVisible = true
+    }.also { w ->                                  // Perform an additional operation on a call chain
+      showWindow(w)
+    }
+
+  val fixedIssue = issueById["13456"]
+    ?.takeIf { it.status == Status.FIXED }         // Use the value only if the condition is true
+  println(fixedIssue)
+}`}
+        </pre>
+      );
+    }
+
+    if (activeWhyTab === "Interoperable") {
+      return (
+        <pre className="text-[14px] leading-[1.6] text-[#252525] font-mono whitespace-pre-wrap">
+{`// Use any existing JVM library or framework
+// Call Kotlin code from Java without an issue
+
+@SpringBootApplication
+class DemoApplication
+
+fun main(args: Array<String>) {
+  runApplication<DemoApplication>(*args)
+}
+
+@RestController
+class MessageResource {
+  @GetMapping
+  fun index(): List<Message> = listOf(
+    Message("1", "Hello!"),
+    Message("2", "Bonjour!"),
+    Message("3", "Privet!"),
+  )
+}
+
+data class Message(val id: String?, val text: String)
+`}
+        </pre>
+      );
+    }
+
+    if (activeWhyTab === "Multiplatform") {
+      return (
+        <pre className="text-[14px] leading-[1.6] text-[#252525] font-mono whitespace-pre-wrap">
+{`// Common
+// Declare signatures to use them in the common code
+// Provide platform-specific implementations in the platform modules
+expect fun randomUUID(): String
+
+expect class PlatformSocket(
+  url: String
+) {
+  fun openSocket(listener: PlatformSocketListener)
+  fun closeSocket(code: Int, reason: String)
+  fun sendMessage(msg: String)
+}
+
+interface PlatformSocketListener {
+  fun onOpen()
+  fun onFailure(t: Throwable)
+  fun onMessage(msg: String)
+  fun onClosing(code: Int, reason: String)
+}
+`}
+        </pre>
+      );
+    }
+
+    return (
+      <pre className="text-[14px] leading-[1.6] text-[#252525] font-mono whitespace-pre-wrap">
+{`data class Employee(
+  val name: String,
+  val email: String,
+  val company: String
+) // + automatically generated equals(), hashCode(), toString(), and copy()
+
+object MyCompany {
+  const val name: String = "MyCompany"            // A singleton
+}
+
+fun main() {                                       // Function at the top level
+  val employee = Employee("Alice",                // No \0new\0 keyword
+    "alice@mycompany.com", MyCompany.name)
+  println(employee)
+}
+`}
+      </pre>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#19191C] text-white font-sans selection:bg-purple-500 text-base pb-0">
@@ -104,8 +288,8 @@ export default function Index() {
               Why Kotlin
             </a>
           </div>
-          <div>
-            <img src="/assets/jetbrains-logo.svg" alt="JetBrains logo" />
+          <div className="shrink-0">
+            <img src="/assets/Logo_backup.svg" alt="JetBrains logo" className="w-[60px] h-auto" />
           </div>
           <div className="text-gray-400 text-sm py--1">
             Developed by <a href="#" className="text-white hover:underline">JetBrains</a> &amp; Open-source <a href="#" className="text-white hover:underline">Contributors</a>
@@ -186,8 +370,8 @@ export default function Index() {
             </div>
           </div>
           
-          <div className="mt-12">
-             <a href="https://blog.jetbrains.com/kotlin/" className="border border-white/20 hover:bg-white/10 px-7 py-4 rounded-lg font-semibold transition-colors duration-200 flex justify-center w-40 rounded-[30px]">
+          <div className="mt-12 flex justify-center">
+             <a href="https://blog.jetbrains.com/kotlin/" className="border border-white/20 hover:bg-white/10 px-7 py-4 rounded-[50px] font-semibold transition-colors duration-200 flex justify-center w-40">
                Kotlin blog
              </a>
           </div>
@@ -205,14 +389,18 @@ export default function Index() {
               <p className="text-gray-600 text-lg mb-8">Easy to pick up, so you can create powerful applications immediately.</p>
               <a href="#" className="border border-gray-300 hover:bg-gray-50 px-8 py-3 rounded-xl font-semibold transition-colors">Get started</a>
             </div>
-            <div className="md:col-span-7 bg-gray-50 rounded-2xl p-8 border border-gray-100 shadow-sm relative overflow-hidden">
-               <div className="flex gap-6 border-b border-gray-200 mb-6 overflow-x-auto pb-4">
-                 <span className="whitespace-nowrap font-medium cursor-pointer text-gray-500 hover:text-gray-900">Concise</span>
-                 <span className="whitespace-nowrap font-medium cursor-pointer text-gray-500 hover:text-gray-900">Safe</span>
-                 <span className="whitespace-nowrap font-medium cursor-pointer text-gray-500 hover:text-gray-900">Expressive</span>
-                 <span className="whitespace-nowrap font-medium cursor-pointer text-gray-500 hover:text-gray-900">Interoperable</span>
-                 <span className="whitespace-nowrap font-medium cursor-pointer text-purple-600 border-b-2 border-purple-600 pb-4 -mb-[17px]">Multiplatform</span>
-               </div>
+            <div className="md:col-span-7 bg-[#efefef] rounded-xl p-4 border border-gray-200 shadow-sm relative overflow-hidden">
+              <div className="flex gap-8 border-b border-gray-300 px-2 overflow-x-auto">
+                <button type="button" onClick={() => setActiveWhyTab("Concise")} className={`whitespace-nowrap text-[17px] pb-3 border-b-2 transition-colors ${activeWhyTab === "Concise" ? "text-[#1f6fff] border-[#1f6fff]" : "text-[#424242] border-transparent hover:text-black"}`}>Concise</button>
+                <button type="button" onClick={() => setActiveWhyTab("Safe")} className={`whitespace-nowrap text-[17px] pb-3 border-b-2 transition-colors ${activeWhyTab === "Safe" ? "text-[#1f6fff] border-[#1f6fff]" : "text-[#424242] border-transparent hover:text-black"}`}>Safe</button>
+                <button type="button" onClick={() => setActiveWhyTab("Expressive")} className={`whitespace-nowrap text-[17px] pb-3 border-b-2 transition-colors ${activeWhyTab === "Expressive" ? "text-[#1f6fff] border-[#1f6fff]" : "text-[#424242] border-transparent hover:text-black"}`}>Expressive</button>
+                <button type="button" onClick={() => setActiveWhyTab("Interoperable")} className={`whitespace-nowrap text-[17px] pb-3 border-b-2 transition-colors ${activeWhyTab === "Interoperable" ? "text-[#1f6fff] border-[#1f6fff]" : "text-[#424242] border-transparent hover:text-black"}`}>Interoperable</button>
+                <button type="button" onClick={() => setActiveWhyTab("Multiplatform")} className={`whitespace-nowrap text-[17px] pb-3 border-b-2 transition-colors ${activeWhyTab === "Multiplatform" ? "text-[#1f6fff] border-[#1f6fff]" : "text-[#424242] border-transparent hover:text-black"}`}>Multiplatform</button>
+              </div>
+
+              <div className="px-8 py-6 overflow-x-auto">
+                {renderWhyKotlinCode()}
+              </div>
             </div>
           </div>
 
@@ -235,16 +423,7 @@ export default function Index() {
               <p className="text-gray-600 text-lg mb-8">Share application logic between web, mobile, and desktop platforms while keeping an experience native to users.<br/><br/>Save time and get the benefit of unlimited access to features specific to these platforms.</p>
               <a href="#" className="border border-gray-300 hover:bg-gray-50 px-8 py-3 rounded-xl font-semibold transition-colors">Learn about Kotlin Multiplatform</a>
             </div>
-            <div className="md:col-span-7 flex items-center justify-center">
-               <div className="w-full aspect-video bg-gradient-to-tr from-purple-100 to-blue-50 rounded-2xl flex items-center justify-center border border-gray-200">
-                   <div className="text-center">
-                     <div className="w-20 h-20 bg-purple-500 rounded-2xl mx-auto mb-4 flex items-center justify-center opacity-80 shadow-lg">
-                        <div className="w-10 h-10 bg-white rounded-lg opacity-50"></div>
-                     </div>
-                     <span className="text-xl font-bold text-purple-900/60">Kotlin Multiplatform</span>
-                   </div>
-               </div>
-            </div>
+            <img src="/assets/Logo.svg" alt="Kotlin logo" className="md:col-span-7 w-[520px] md:w-[760px] h-auto justify-self-center" />
           </div>
 
           {/* Community Block */}
@@ -266,33 +445,23 @@ export default function Index() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end mb-16 gap-6">
              <h2 className="text-5xl font-bold text-gray-900 tracking-tight">Kotlin Usage Highlights</h2>
-             <button className="border border-gray-300 bg-white text-gray-700 px-6 py-3 rounded-xl font-medium hover:bg-gray-50 transition-colors">Sort: Default</button>
+             <button
+               type="button"
+               onClick={() => setUsageSortMode((prev) => (prev === "default" ? "az" : "default"))}
+               className="border border-gray-300 bg-white text-gray-700 px-6 py-3 rounded-xl font-medium hover:bg-gray-50 transition-colors"
+             >
+               {usageSortMode === "default" ? "Sort: Default" : "Sort: A-Z"}
+             </button>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="bg-white border border-gray-200 p-10 rounded-2xl hover:border-gray-400 hover:shadow-md transition-all cursor-pointer">
-              <div className="h-12 flex items-center mb-6 text-3xl font-bold text-blue-600">Gradle</div>
-              <p className="text-gray-600 text-lg leading-relaxed">Gradle is introducing Kotlin as a language for writing build scripts</p>
-            </div>
-            <div className="bg-white border border-gray-200 p-10 rounded-2xl hover:border-gray-400 hover:shadow-md transition-all cursor-pointer">
-              <div className="h-12 flex items-center mb-6 text-3xl font-bold text-red-500">Corda</div>
-              <p className="text-gray-600 text-lg leading-relaxed">Corda is an open-source distributed ledger platform, supported by major banks, and built entirely in Kotlin</p>
-            </div>
-            <div className="bg-white border border-gray-200 p-10 rounded-2xl hover:border-gray-400 hover:shadow-md transition-all cursor-pointer">
-              <div className="h-12 flex items-center mb-6 text-3xl font-bold text-green-600">Evernote</div>
-              <p className="text-gray-600 text-lg leading-relaxed">Evernote recently integrated Kotlin into their Android client</p>
-            </div>
-            <div className="bg-white border border-gray-200 p-10 rounded-2xl hover:border-gray-400 hover:shadow-md transition-all cursor-pointer">
-              <div className="h-12 flex items-center mb-6 text-3xl font-bold text-blue-500">Coursera</div>
-              <p className="text-gray-600 text-lg leading-relaxed">Coursera Android app is partially written in Kotlin</p>
-            </div>
-            <div className="bg-white border border-gray-200 p-10 rounded-2xl hover:border-gray-400 hover:shadow-md transition-all cursor-pointer">
-              <div className="h-12 flex items-center mb-6 text-3xl font-bold text-green-700">Spring</div>
-              <p className="text-gray-600 text-lg leading-relaxed">Spring makes use of Kotlin's language features to offer more concise APIs</p>
-            </div>
-            <div className="bg-white border border-gray-200 p-10 rounded-2xl hover:border-gray-400 hover:shadow-md transition-all cursor-pointer">
-              <div className="h-12 flex items-center mb-6 text-3xl font-bold text-blue-700">Atlassian</div>
-              <p className="text-gray-600 text-lg leading-relaxed">All new code in the Trello Android app is in Kotlin</p>
-            </div>
+            {displayedUsageHighlights.map((item) => (
+              <div key={item.name} className="bg-white border border-gray-200 p-10 rounded-2xl hover:border-gray-400 hover:shadow-md transition-all cursor-pointer">
+                <div className="h-12 flex items-center mb-6">
+                  <img src={item.logo} alt={`${item.name} logo`} className="h-10 w-auto object-contain" />
+                </div>
+                <p className="text-gray-600 text-lg leading-relaxed">{item.description}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -305,6 +474,12 @@ export default function Index() {
           <a href="#" className="bg-white text-black hover:bg-gray-200 px-10 py-5 rounded-xl font-bold text-lg transition-colors">
             Get started
           </a>
+        </div>
+      </section>
+      <section className="p-8">
+        <div>
+          <p>Stay in touch:</p>
+          
         </div>
       </section>
     </div>
