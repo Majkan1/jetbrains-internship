@@ -1,87 +1,104 @@
-# Welcome to React Router!
+# Kotlin Website Migration (Task #2)
 
-A modern, production-ready template for building full-stack React applications using React Router.
+This repository contains a migration of a legacy React homepage (from a stripped-down revision of https://kotlinlang.org) to **React Router 7 Framework Mode** with **Server-Side Rendering (SSR)**.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/remix-run/react-router-templates/tree/main/default)
+## Assignment Scope
 
-## Features
+- Single-page homepage migration.
+- Navigation links are intentionally non-functional (as in the source assignment).
+- Visual appearance and interactions are preserved.
 
-- 🚀 Server-side rendering
-- ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
+## What Was Migrated
 
-## Getting Started
+1. **Framework Mode setup** using React Router 7 project structure.
+2. **SSR enabled** in `react-router.config.ts` (`ssr: true`).
+3. Legacy homepage moved to route-based app structure:
+	 - Root layout: `app/root.tsx`
+	 - Index route: `app/routes/home.tsx`
+	 - Route config: `app/routes.ts`
+4. Existing interactive behavior preserved (for example, tab switching and UI hover states).
 
-### Installation
+## Tech Stack
 
-Install the dependencies:
+- React 19
+- React Router 7 (Framework Mode)
+- TypeScript
+- Tailwind CSS
+- Existing `@rescui` / Kotlin website ecosystem dependencies retained for maintainability
+
+## Project Structure
+
+```text
+jetbrains-internship/
+	app/
+		root.tsx
+		routes.ts
+		routes/
+			home.tsx
+	react-router.config.ts
+	vite.config.ts
+```
+
+## Run Locally
+
+### 1. Install dependencies
 
 ```bash
 npm install
 ```
 
-### Development
-
-Start the development server with HMR:
+### 2. Start development server
 
 ```bash
 npm run dev
 ```
 
-Your application will be available at `http://localhost:5173`.
+Open `http://localhost:5173`.
 
-## Building for Production
-
-Create a production build:
+### 3. Build for production
 
 ```bash
 npm run build
 ```
 
-## Deployment
-
-### Docker Deployment
-
-To build and run using Docker:
+### 4. Type-check
 
 ```bash
-docker build -t my-app .
-
-# Run the container
-docker run -p 3000:3000 my-app
+npm run typecheck
 ```
 
-The containerized application can be deployed to any platform that supports Docker, including:
+### 5. Run production server
 
-- AWS ECS
-- Google Cloud Run
-- Azure Container Apps
-- Digital Ocean App Platform
-- Fly.io
-- Railway
-
-### DIY Deployment
-
-If you're familiar with deploying Node applications, the built-in app server is production-ready.
-
-Make sure to deploy the output of `npm run build`
-
-```
-├── package.json
-├── package-lock.json (or pnpm-lock.yaml, or bun.lockb)
-├── build/
-│   ├── client/    # Static assets
-│   └── server/    # Server-side code
+```bash
+npm run start
 ```
 
-## Styling
+Production server runs on `http://localhost:3000`.
 
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
+## SSR Verification
 
----
+- SSR is turned on in `react-router.config.ts`.
+- The page is rendered on the server and then hydrated on the client.
+- Interactive components continue to work after hydration.
 
-Built with ❤️ using React Router.
+## Migration Decisions
+
+1. **React Router 7 Framework Mode as the target architecture**
+	The migrated project follows route-based structure (`app/root.tsx`, `app/routes.ts`, `app/routes/home.tsx`) to align with modern React Router conventions and improve maintainability.
+
+2. **SSR enabled instead of SPA mode**
+	`ssr: true` is explicitly configured to satisfy assignment requirements for server rendering and hydration.
+
+3. **Single-page behavior intentionally preserved**
+	The source assignment contains one homepage only, so top navigation links remain non-functional by design.
+
+4. **Existing UI ecosystem preserved for maintainability**
+	Existing dependencies (including `@rescui`/Kotlin website ecosystem packages) are kept to avoid unnecessary UI regressions and to keep the migrated code close to the original visual baseline.
+
+5. **Production run path corrected for SSR output**
+	Start command uses `react-router-serve ./build/server/index.js` so the server build is executed directly in production mode.
+
+## Notes
+
+- Minor visual differences may exist if dependency versions differ from the original source revision.
+- The homepage-only behavior (non-functional top navigation links) is expected by the assignment.
