@@ -480,7 +480,7 @@ fun main() {                                       // Function at the top level
         }}
       >
         <div className="max-w-7xl mx-auto px-5.5 text-left">
-          <p style = {{color:'rgba(255, 255, 255, 0.7))'}}className=" font-4 mb-4">How about to try?</p>
+          <p style = {{color:'rgba(255, 255, 255, 0.7)'}}className=" font-4 mb-4">How about to try?</p>
           <h2 className="text-[72px] font-bold mb-10 leading-tight">Start using Kotlin today!<br/>Build your first app in your favorite IDE</h2>
           <a href="#" className="bg-white text-black hover:bg-gray-200 px-8 py-3 rounded-3xl text-lg transition-colors">
             Get started
