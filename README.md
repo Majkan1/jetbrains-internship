@@ -9,13 +9,13 @@
 
 ## Screenshots
 
-![Screenshot 1](../Screenshot%202026-03-16%20172441.png)
-![Screenshot 2](../Screenshot%202026-03-16%20172630.png)
-![Screenshot 3](../Screenshot%202026-03-16%20172656.png)
-![Screenshot 4](../Screenshot%202026-03-16%20172724.png)
-![Screenshot 5](../Screenshot%202026-03-16%20172759.png)
-![Screenshot 6](../Screenshot%202026-03-16%20172826.png)
-![Screenshot 7](../Screenshot%202026-03-16%20172854.png)
+![Screenshot 1](./screenshots/Screenshot%202026-03-16%20172441.png)
+![Screenshot 2](./screenshots/Screenshot%202026-03-16%20172630.png)
+![Screenshot 3](./screenshots/Screenshot%202026-03-16%20172656.png)
+![Screenshot 4](./screenshots/Screenshot%202026-03-16%20172724.png)
+![Screenshot 5](./screenshots/Screenshot%202026-03-16%20172759.png)
+![Screenshot 6](./screenshots/Screenshot%202026-03-16%20172826.png)
+![Screenshot 7](./screenshots/Screenshot%202026-03-16%20172854.png)
 
 ---
 
